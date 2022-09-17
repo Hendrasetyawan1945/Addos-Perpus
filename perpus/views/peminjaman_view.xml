@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="peminjaman_view_tree" model="ir.ui.view">
+        <field name="name">peminjaman_view_tree</field>
+        <field name="model">p.peminjaman</field>
+        <field name="arch" type="xml">
+            <tree string="peminjaman_tree">
+<!--                <field name="id_peminjaman"/>-->
+                <field name="name"/>
+                <field name="no_anggota"/>
+                <field name="petugas_id"/>
+                <field name="nama_peminjaman"/>
+                <field name="cek"/>
+                <field name="peminjaman_ids"/>
+                <field name="tgl_pinjam"/>
+                <field name="tgl_kembali"/>
+                <field name="state"
+                       decoration-primary="state=='done'"
+                       decoration-success="state=='confirm'"
+                       decoration-warning="state=='draf'"
+                       decoration-danger="state=='cancel'"
+                widget="badge"/>
+                <field name="sudah_kembali"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="peminjaman_view_form" model="ir.ui.view">
+        <field name="name">peminjaman_view_form</field>
+        <field name="model">p.peminjaman</field>
+        <field name="arch" type="xml">
+            <form string="peminjaman_form">
+
+                    <header>
+                        <button string="Draf" name="action_draf" type="object" confirm="Apakah yakin anda akan mengembalikan transaksi ini ke draf ?" states="cancel"/>
+                        <button string="Confirm" name="action_confirm" type="object" states="draf" /> <!--Untuk merubah menjadi confim -->
+                        <button string="Done" name="action_done" type="object" states="confirm"/>
+                        <button string="Cancel" name="action_cancel" type="object" confirm="Apakah anda akan membatalkan pembelian?" states="confirm,done" />
+
+                        <field name="state" widget="statusbar" statusbar_visible="draf,confirm,done"/>
+                    </header>
+
+                <sheet>
+                    <group>
+<!--                        <h5><b><field name="id_peminjaman" readonly="1"/></b></h5>-->
+                        <field name="name" attrs="{'readonly' : [('state','!=',('draf'))]}"/>
+                        <field name="no_anggota" attrs="{'readonly' : [('state','!=',('draf'))]}"/>
+                        <field name="nama_peminjaman" attrs="{'readonly' : [('state','!=',('draf'))]}"/>
+                        <field name="cek" attrs="{'readonly' : [('state','!=',('draf'))]}"/>
+                        <field name="petugas_id" attrs="{'readonly' : [('state','!=',('draf'))]}"/>
+                        <field name="tgl_pinjam" attrs="{'readonly' : [('state','!=',('draf'))]}"/>
+                        <field name="tgl_kembali" attrs="{'readonly' : [('state','!=',('draf'))]}"/>
+                        <field name="sudah_kembali"/>
+                    </group>
+                    <notebook colspan='8'>
+                        <page name="name" string="No Peminjaman Buku">
+                            <field name="peminjaman_ids">
+                                <tree editable="button">
+                                    <field name="kd_register"/>
+                                    <field name="jdl"/>
+                                    <field name="qty" sum="jum"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="peminjaman_action" model="ir.actions.act_window">
+        <field name="name">Daftar Peminjaman</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">p.peminjaman</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="peminjaman_categ" 
+              name="Daftar Peminjaman" 
+              parent="perpus_root" action="peminjaman_action" 
+              sequence="30"/>
+</odoo>

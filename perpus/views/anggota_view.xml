@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="anggota_view_tree" model="ir.ui.view">
+        <field name="name">anggota_view_tree</field>
+        <field name="model">p.anggota</field>
+        <field name="arch" type="xml">
+            <tree string="anggota_tree">
+                <field name="name"/>
+                <field name="nama"/>
+                <field name="alamat"/>
+                <field name="prodi"/>
+                <field name="jk"/>
+                <field name="anggota"/>
+                <field name="img" widget="image" class="img-circle" width="50" height="75" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="anggota_view_form" model="ir.ui.view">
+        <field name="name">anggota_view_form</field>
+        <field name="model">p.anggota</field>
+        <field name="arch" type="xml">
+            <form string="anggota_form">
+                <sheet>
+                    <group string="Daftar Anggota Perpus">
+                        <field name="name"/>
+                        <field name="nama"/>
+                        <field name="img" widget="image" class="float-end" width="100" height="100"/>
+                    </group>
+                    <group>
+                        <field name="alamat"/>
+                        <field name="prodi"/>
+                        <field name="jk"/>
+                        <field name="anggota"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="anggota_kanban" model="ir.ui.view">
+     <field name="name">anggota.kanban</field>
+      <field name="model">p.anggota</field>
+     <field name="arch" type="xml">
+        <kanban>
+                <field name="name"/>
+                <field name="nama"/>
+                <field name="alamat"/>
+                <field name="prodi"/>
+                <field name="jk"/>
+                <field name="anggota"/>
+                <field name="img" widget="image" class="img-circle" width="50" height="75" />
+     <templates>
+     <t t-name="kanban-box">
+         <div t-attf-class="oe kanban_global_click">
+             <div class="oe_kanban_global">
+                 <div class="container">
+                 <ul>
+                    <li>No :<field name="name"/></li>
+                    <li>Nama :<field name="nama"/> </li>
+                     <li><field name="img" widget="image" class="img-circle" width="50" height="75" /></li>
+                     <li>Alamat :<field name="alamat"/></li>
+                     <li>Prodi : <field name="prodi"/></li>
+                     <li>Jenis Kelamin :<field name="jk"/></li>
+                     <li>Anggota Perpus :<field name="anggota"/></li>
+                 </ul>
+             </div>
+         </div>
+         </div>
+
+     </t>
+     </templates>
+     </kanban>
+     </field>
+    </record>
+
+    <record id="anggota_action" model="ir.actions.act_window">
+        <field name="name">Anggota Perpus</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">p.anggota</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="anggota_categ"
+              name="Anggota Perpus"
+              parent="pengguna_root"
+              action="anggota_action"
+              sequence="10"/>
+</odoo>

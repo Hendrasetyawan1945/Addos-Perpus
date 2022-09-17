@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pengembalian_view_tree" model="ir.ui.view">
+        <field name="name">pengembalian_view_tree</field>
+        <field name="model">p.pengembalian</field>
+        <field name="arch" type="xml">
+            <tree string="pengembalian_tree">
+                <field name="id_pengembalian"/>
+                <field name="peminjaman_id"/>
+                <field name="name"/>
+                <field name="tgl_pengembalian"/>
+                <field name="tgl_kesepakatan"/>
+            </tree>
+        </field>
+    </record>
+    <record id="pengembalian_view_form" model="ir.ui.view">
+        <field name="name">pengembalian_view_form</field>
+        <field name="model">p.pengembalian</field>
+        <field name="arch" type="xml">
+            <form string="pengembalian_form">
+                <sheet>
+                    <div class="oe_title">
+                        <h5>
+                           <b>Kode Pengembalian : </b> <field name="id_pengembalian" readonly="1"/>
+                        </h5>
+                    </div>
+                    <group string="Daftar Pengembalian Buku">
+                        <field name="peminjaman_id"/>
+                        <field name="name"/>
+                        <field name="tgl_pengembalian"/>
+                        <field name="tgl_kesepakatan"/>
+                        <field name="terlambat"/>
+                        <field name="denda"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="pengembalian_action" model="ir.actions.act_window">
+        <field name="name">Daftar Pengembalian</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">p.pengembalian</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="pengembalian_categ"
+              name="Daftar Pengembalian"
+              parent="perpus_root"
+              action="pengembalian_action"
+              sequence="40"/>
+</odoo>
